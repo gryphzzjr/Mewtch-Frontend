@@ -1,35 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react'
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const githubRepo = "https://github.com/gryphzzjr/Mewtch-Frontend";
+
+  function redirectToGithub() {
+    window.location.href = githubRepo;
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+    <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center gap-3">
+      <h1 className="text-gray-900 font-bold text-3xl">Welcome to <span className="text-orange-400">Mewtch</span></h1>
+      <p className="text-gray-600 font-regular w-2xl text-center">
+        Heyo! This website is still under development unfortunately... You can check back later, and i promise you it's going to be the best thing you've ever seen!
       </p>
-    </>
+
+      <div className="flex flex-row space-x-5">
+        <button className="bg-orange-400 p-3 rounded-xl text-white font-medium hover:bg-orange-500 transition-all cursor-pointer">Okay, i understand!</button>
+        <button className="border-2 border-orange-400 p-3 text-orange-400 rounded-xl hover:bg-orange-100 hover:text-orange-500 transition-all cursor-pointer" onClick={redirectToGithub}>View Github Repo</button>
+      </div>
+    </div>
   )
 }
-
-export default App
