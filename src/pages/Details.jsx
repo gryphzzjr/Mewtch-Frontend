@@ -9,7 +9,6 @@ import {
   PawPrint,
   Share2,
 } from "lucide-react";
-import AuthenticationModal from "../components/AuthModal";
 import AuthModal from "../components/AuthModal";
 
 export default function AnimalInfo() {
