@@ -1,118 +1,162 @@
-import React, { useState } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-
-const petsData = Array.from({ length: 24 }, (_, i) => ({
-  name: `Pet ${i + 1}`,
-  breed: ["Labrador", "Poodle", "Bulldog"][i % 3],
-  age: Math.floor(Math.random() * 10) + 1,
-  size: ["Pequeno", "Médio", "Grande"][i % 3],
-  photo: `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTpWQPJ-OkGEW28SIQYZMgBv9DPM4tGK2s8M5fpd93BxBGWi4GccMmTnVBMZVs9cbPkL0&usqp=CAU`,
-}));
+import React, { useState } from 'react'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 export default function Catalog() {
-  const [search, setSearch] = useState('');
-  const [filters, setFilters] = useState({ age: '', size: '' });
+  const [filters, setFilters] = useState({
+    gender: 'any',
+    age: 'any',
+    size: 'any',
+    sort: 'recent',
+  })
 
-  const handleChange = (e) => setFilters({ ...filters, [e.target.name]: e.target.value });
+  const pets = [
+    { id: 1, name: 'Luna', age: '2 anos', gender: 'Fêmea', size: 'Pequeno', img: 'https://fotos.amomeupet.org/uploads/fotos/1748888712_683dec88effde_hd.jpeg' },
+    { id: 2, name: 'Nico', age: '1 ano', gender: 'Macho', size: 'Médio', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYkcfZO3xqNVAr0z7IBVPioQ7mSnYWr2dWKg&s' },
+    { id: 3, name: 'Bidu', age: '4 anos', gender: 'Macho', size: 'Grande', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6KLJmYYNu4D3DQLnGArtIQQQA34PwLcqDmw&s' },
+    { id: 4, name: 'Misha', age: '3 meses', gender: 'Fêmea', size: 'Pequeno', img: 'https://www.shutterstock.com/image-photo/cute-gray-cat-kitten-looking-600nw-2386006989.jpg' },
+    { id: 5, name: 'Thor', age: '5 meses', gender: 'Macho', size: 'Pequeno', img: 'https://cdn.awsli.com.br/600x450/370/370790/produto/255393271/pit-monster-filhotes-1024x510-28885ibich.jpg' },
+  ]
 
-  const filteredPets = petsData.filter((pet) => {
-    return (
-      pet.breed.toLowerCase().includes(search.toLowerCase()) &&
-      (filters.age === '' || pet.age <= Number(filters.age)) &&
-      (filters.size === '' || pet.size === filters.size)
-    );
-  });
+  const handleChange = e => {
+    const { name, value } = e.target
+    setFilters(prev => ({ ...prev, [name]: value }))
+  }
+
+  const filtered = pets.filter(p => {
+    if (filters.gender !== 'any' && p.gender.toLowerCase() !== filters.gender) return false
+    if (filters.size !== 'any' && p.size.toLowerCase() !== filters.size) return false
+    return true
+  })
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="min-h-screen bg-white flex flex-col items-center w-full">
       <Header />
 
-      {/* título di cria + pesquisa */}
-      <div className="flex flex-col md:flex-row justify-between items-center px-12 py-8">
-        <h1 className="text-gray-900 font-bold text-3xl md:text-4xl mb-4 md:mb-0">
-          Encontre o seu match!
-        </h1>
-        <input
-          type="text"
-          placeholder="Pesquisar raça..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="p-3 rounded-xl border border-gray-300 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm"
-        />
+      {/* Banner mantido claríssimo */}
+      <img src="/assets/banner.png" alt="Banner" className="w-full object-cover" />
+
+      {/* Card de filtros */}
+      <div className="bg-white shadow-xl rounded-2xl w-11/12 max-w-6xl h-28 -mt-10 flex items-center justify-between px-8 z-10 border border-gray-100">
+        <div className="flex items-center w-full h-full divide-x divide-gray-100">
+          {/* Gênero */}
+          <div className="flex flex-col justify-center px-6 w-1/4">
+            <FilterSelect
+              label="Gênero"
+              name="gender"
+              value={filters.gender}
+              onChange={handleChange}
+              options={[
+                { value: 'any', label: 'Todos' },
+                { value: 'macho', label: 'Macho' },
+                { value: 'fêmea', label: 'Fêmea' },
+              ]}
+            />
+          </div>
+
+          {/* Idade */}
+          <div className="flex flex-col justify-center px-6 w-1/4">
+            <FilterSelect
+              label="Idade"
+              name="age"
+              value={filters.age}
+              onChange={handleChange}
+              options={[
+                { value: 'any', label: 'Todas' },
+                { value: 'baby', label: 'Filhote' },
+                { value: 'young', label: 'Jovem' },
+                { value: 'adult', label: 'Adulto' },
+              ]}
+            />
+          </div>
+
+          {/* Tamanho */}
+          <div className="flex flex-col justify-center px-6 w-1/4">
+            <FilterSelect
+              label="Tamanho"
+              name="size"
+              value={filters.size}
+              onChange={handleChange}
+              options={[
+                { value: 'any', label: 'Todos' },
+                { value: 'pequeno', label: 'Pequeno' },
+                { value: 'médio', label: 'Médio' },
+                { value: 'grande', label: 'Grande' },
+              ]}
+            />
+          </div>
+
+          {/* Sort by */}
+          <div className="flex flex-col justify-center px-6 w-1/4">
+            <FilterSelect
+              label="Sort by"
+              name="sort"
+              value={filters.sort}
+              onChange={handleChange}
+              options={[
+                { value: 'recent', label: 'Mais Recentes' },
+                { value: 'oldest', label: 'Mais Antigos' },
+                { value: 'alphabetical', label: 'A–Z' },
+              ]}
+            />
+          </div>
+        </div>
       </div>
 
-      <div className="flex px-12 gap-8">
-        {/* Grid de pets */}
-        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredPets.length > 0 ? (
-            filteredPets.map((pet, index) => (
-              <div
-                key={index}
-                className="bg-orange-50 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-2 relative flex flex-col items-center text-center"
-              >
-                {/* Badges */}
-                <div className="absolute top-4 left-4 bg-orange-400 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                  {pet.age} anos
-                </div>
-                <div className="absolute top-4 right-4 bg-yellow-300 text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
-                  {pet.size}
-                </div>
+      {/* Sessão de recomendações */}
+      <div className="w-11/12 max-w-6xl mt-12 mb-16">
+        <h2 className="text-3xl font-bold mb-6 text-gray-800">Você pode gostar destes...</h2>
 
-                <img
-                  src={pet.photo}
-                  alt={pet.name}
-                  className="w-full h-64 object-cover rounded-t-2xl"
-                />
-                <div className="p-4 flex flex-col items-center">
-                  <h3 className="text-xl font-semibold text-gray-900">{pet.name}</h3>
-                  <p className="text-gray-600">{pet.breed}</p>
-                  <button className="mt-4 px-6 py-2 bg-orange-400 text-white rounded-lg hover:bg-orange-500 transition transform hover:scale-105">
-                    Doar / Adotar
-                  </button>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {filtered.map(pet => (
+            <div
+              key={pet.id}
+              className="bg-white rounded-2xl shadow-md overflow-hidden transition transform hover:scale-[1.03] hover:shadow-xl"
+            >
+              <img src={pet.img} alt={pet.name} className="w-full h-52 object-cover" />
+              <div className="p-4 flex flex-col justify-between">
+                <div>
+                  <h3 className="font-bold text-xl text-gray-800">{pet.name}</h3>
+                  <p className="text-gray-500 text-sm">{pet.age}</p>
+                  <p className="text-gray-500 text-sm">{pet.gender} • {pet.size}</p>
                 </div>
-
-                {/* Bolhas sutis */}
-                <div className="absolute -bottom-4 -right-4 w-8 h-8 bg-pink-300 rounded-full opacity-30 filter blur-md animate-pulse"></div>
-                <div className="absolute -bottom-6 -left-6 w-12 h-12 bg-yellow-200 rounded-full opacity-25 filter blur-xl animate-pulse"></div>
+                <button className="mt-4 w-full bg-indigo-600 text-white py-2 rounded-xl font-semibold hover:bg-indigo-700 transition">
+                  Adotar
+                </button>
+                <button className="mt-4 w-full border-2 border-indigo-600 text-indigo-600 py-2 rounded-xl font-semibold hover:bg-indigo-100 transition">
+                  Ver mais
+                </button>
               </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-500 col-span-full">Nenhum pet encontrado.</p>
-          )}
+            </div>
+          ))}
         </div>
-
-        {/* Menu lateral de filtros */}
-        <aside className="w-64 hidden lg:flex flex-col gap-6 sticky top-32">
-          <h2 className="font-semibold text-gray-900 text-lg">Filtros</h2>
-          <select
-            name="age"
-            value={filters.age}
-            onChange={handleChange}
-            className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400"
-          >
-            <option value="">Idade máxima</option>
-            <option value="1">1 ano</option>
-            <option value="3">3 anos</option>
-            <option value="5">5 anos</option>
-            <option value="10">10 anos</option>
-          </select>
-
-          <select
-            name="size"
-            value={filters.size}
-            onChange={handleChange}
-            className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400"
-          >
-            <option value="">Tamanho</option>
-            <option value="Pequeno">Pequeno</option>
-            <option value="Médio">Médio</option>
-            <option value="Grande">Grande</option>
-          </select>
-        </aside>
       </div>
 
       <Footer />
     </div>
-  );
+  )
+}
+
+/* Select estilizado */
+function FilterSelect({ label, name, value, onChange, options }) {
+  return (
+    <div className="flex flex-col items-start">
+      <label className="text-gray-700 text-sm font-medium mb-1">{label}</label>
+      <div className="relative w-full">
+        <select
+          name={name}
+          value={value}
+          onChange={onChange}
+          className="appearance-none border border-gray-300 rounded-xl px-4 py-2 pr-8 text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition cursor-pointer w-full"
+        >
+          {options.map(opt => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">▼</span>
+      </div>
+    </div>
+  )
 }

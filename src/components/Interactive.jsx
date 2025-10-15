@@ -18,7 +18,7 @@ export default function ExploreCatalog() {
   };
 
   return (
-    <section className="relative bg-orange-50 pt-24 px-8 md:px-16 overflow-hidden">
+    <section className="relative bg-orange-50 pt-24 px-8 md:px-16 overflow-hidden border-b-3 border-orange-100">
 
       {/* Semicírculo sólido branco no topo */}
       <div className="absolute top-0 left-0 w-full flex justify-center inset-0">

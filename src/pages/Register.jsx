@@ -55,7 +55,7 @@ export default function Register() {
               className="w-full p-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white transition"
             />
             <input
-              type="text"
+              type="password"
               name="confirmPassword"
               value={form.confirmPassword}
               onChange={handleChange}
