@@ -5,7 +5,7 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Catalog from './pages/Catalog'
 import AnimalInfo from './pages/Details'
-import AdoptionChat from './pages/Chat'
+import ThankYouPage from './pages/Thanks'
 
 export default function App() {
   return (
@@ -16,7 +16,7 @@ export default function App() {
         <Route path="/signin" element={<Login />} />
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/catalog/animals/:id" element={<AnimalInfo />} />
-        <Route path="/chat" element={<AdoptionChat />} />
+        <Route path="/thanks" element={<ThankYouPage />} />
       </Routes>
     </Router>
   )

@@ -163,6 +163,27 @@ export default function AnimalInfo() {
                       {pet.gender}
                     </span>
                   </div>
+
+                  <div className="flex flex-col space-y-3 my-3 w-full max-w-xs mx-auto">
+                    <a className="w-full">
+                      <button
+                        className={`text-white font-medium px-6 py-3 w-full rounded-full cursor-pointer transition-all duration-300 ${
+                          pet.gender === "Fêmea"
+                            ? "bg-pink-500 hover:bg-pink-600"
+                            : "bg-blue-500 hover:bg-blue-600"
+                        }`}
+                      >
+                        Adotar {pet.name}
+                      </button>
+                    </a>
+
+                    {/* Botão Ver mais */}
+                    <a className="w-full">
+                      <button className="border-2 text-gray-600 border-gray-400 px-6 py-3 rounded-full w-full hover:bg-gray-100 cursor-pointer transition-all duration-300">
+                        Ver mais
+                      </button>
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}

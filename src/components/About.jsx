@@ -7,7 +7,7 @@ export default function About() {
       {/* Conteúdo à esquerda */}
       <div className="md:w-1/2 flex flex-col justify-center space-y-6">
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-          Como o <span className="bg-gradient-to-r from-[#F86B47] to-[#ff9f70] text-transparent bg-clip-text">Mewtch</span> conecta você ao seu novo amigo
+          Como o <span className="bg-gradient-to-r from-[#F86B47] to-[#ff9f70] text-transparent bg-clip-text">Mewtch</span> conecta você ao seu novo melhor amigo
         </h2>
         <p className="text-gray-600 text-lg md:text-xl max-w-md">
           Encontre, publique, conheça, doe e adote pets com facilidade. Nossa plataforma foi criada para conectar pessoas e animais que merecem um lar cheio de amor. É rápido, intuitivo e seguro. Em apenas 3 etapas, você tem um novo parceiro para seguir a vida!
